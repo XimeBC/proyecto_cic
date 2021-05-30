@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es" class style="height:auto;">
+
+  <head>
+  
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Monitoreo</title>
+      {% load bootstrap4 %}
+      {% load widget_tweaks %}
+      {% bootstrap_css %}
+      <style>
+          body, html {
+            height: 100%;
+            margin: 0;
+          }
+          .background {
+            background-image: url("https://images.pexels.com/photos/1424246/pexels-photo-1424246.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=1000");
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+          }
+        </style>  
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="{% url 'inicio' %}">Monitoreo de Sintomas</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        {% if user.is_authenticated %}
+          {% if user.is_superuser == 1 %}
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'lista_usuarios' %}">Administrador</a>
+                  </li>  
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'usuariosrestringidos' %}">Restringidos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{% url 'registro' %}">Registrar</a>
+                  </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-text">
+                 <a class="nav-link" href="{% url 'usuario' %}">Informacion</a>
+                </li>
+                <li class="navbar-text">
+                 <a class="nav-link" href="{% url 'control' %}">Historial</a>
+                </li>
+                <li class="navbar-text">
+                  <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+              </ul>
+            </div>
+          {% else %}
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="navbar-text">
+                  <a class="nav-link" href="{% url 'usuario' %}">Informacion</a>
+                </li>
+                <li class="navbar-text">
+                  <a class="nav-link" href="{% url 'control' %}">Historial</a>
+                </li>
+              </ul>
+              <ul class="nav navbar-nav navbar-right">
+                <li class="navbar-text">
+                  <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+              </ul>
+            </div>
+          {% endif %}
+        {% else %}
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item"> 
+                  <a class="nav-link" href="{% url 'login' %}">Inicio Sesión</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'registro' %}">Registro</a>
+                </li>
+              </ul>
+           </div>  
+          {% endif %}
+    </nav>
+<!--
+ <div class="p-5 text-center bg-image" style="background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSz-leWsPAuVJX8cVkBFMMgxG3lXl4esz_2Q&usqp=CAU); height: 1100px;">
+ <div class="p-5 text-center bg-image" style="background-image: url(https://www.ipn.mx/assets/files/secgeneral/uploads/comunicado_ipn_sg_1.jpg); height: 1100px;">
+ <div class="p-5 text-center bg-image" style="background-image: url(https://www.gob.mx/cms/uploads/article/main_image/17417/268e4ddb65e9fa2c580275fd7b993b85.jpg); height: 1100px;">
+
+  -->
+
+ <div class="p-5 text-center bg-image"  style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Logo_Instituto_Polit%C3%A9cnico_Nacional.png/1200px-Logo_Instituto_Polit%C3%A9cnico_Nacional.png); width=5400px;">
+        
+        {% block content %}
+        {% endblock %}
+    </div>
+    {% bootstrap_javascript jquery='full' %}
+  </body>
+</html>
