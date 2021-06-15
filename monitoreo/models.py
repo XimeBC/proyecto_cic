@@ -24,7 +24,6 @@ class Usuarios(models.Model):
 class Control_usuarios(models.Model):
     temperatura = models.CharField(max_length=200)
     oxigenacion = models.CharField(max_length=200)
-    nombre_usuario=models.CharField(max_length=200, default='null')
     user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     fecha_hora_registro = models.DateField(max_length=200)
     def __str__(self):
@@ -48,11 +47,11 @@ class Qrs(models.Model):
     def __str__(self):
         return str( self.nombre_usuario )
     def save(self, *args, **kwargs):
-        qrcode_img = qrcode.make(self.nombre_usuario)
+        qrcode_img = qrcode.make(self.user.id)
         canvas = Image.new('RGB',(290,290),'white')
         draw = ImageDraw.Draw(canvas)
         canvas.paste(qrcode_img)
-        fname=f'url-{self.nombre_usuario}'+'.png'
+        fname=f'url-{self.user.id}'+'.png'
         buffer = BytesIO()
         canvas.save(buffer,'PNG')
         self.url.save(fname, File(buffer), save=False)
